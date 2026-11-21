@@ -90,7 +90,7 @@ python extract_publisher_tables.py
 python build_protocol_tables.py
 ~~~
 
-The download helper reports differences from the reference hashes and keeps existing local files for review. A publisher may have changed the live document or layout. For an exact reproduction, use the reference snapshots and compare their hashes to the manifest. The PDF import covers selected pages and tables, including the West Midlands dose and contour tables and the Wake Forest conventional fractionation table. The two generated SQLite databases and all review outputs stay under ignored local directories.
+The download helper reports differences from the reference hashes and keeps existing local files for review. If the official West Midlands PDF returns HTTP 403, download it from a network that can reach the publisher or use the matching handoff snapshot. Save it as `data/raw/wmrn.pdf` and rerun the download command. A publisher may have changed the live document or layout. For an exact reproduction, use the reference snapshots and compare their hashes to the manifest. The PDF import covers selected pages and tables, including the West Midlands dose and contour tables and the Wake Forest conventional fractionation table. The two generated SQLite databases and all review outputs stay under ignored local directories.
 
 ## 3. Smoke-test both paths and reproduce the evaluation
 
