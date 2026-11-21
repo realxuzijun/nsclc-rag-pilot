@@ -1,0 +1,77 @@
+[
+  {
+    "id": "P01",
+    "question": "West Midlands v4.0 的胸壁勾画把它定义为多厚的环形层？明确排除哪些结构？",
+    "search_terms": "West Midlands ChestWall contour thickness and excluded anatomy"
+  },
+  {
+    "id": "P02",
+    "question": "West Midlands 的椎管勾画从哪个头侧标志起，尾侧终点如何定义？",
+    "search_terms": "West Midlands spinal canal contour cranial landmark and caudal endpoint"
+  },
+  {
+    "id": "P03",
+    "question": "WMRN §8.2 心脏与肺动脉结构在 5 次分割时，Dmax (0.1 cc) 的最优与强制值分别怎样写？",
+    "search_terms": "WMRN §8.2 Heart pulmonary artery Dmax 0.1cc 5 fractions optimal mandatory"
+  },
+  {
+    "id": "P04",
+    "question": "West Midlands 表里，3 次分割时 Lungs–GTV 的 V20Gy 分最优与强制两列，各是多少？",
+    "search_terms": "West Midlands Lungs GTV V20Gy 3 fractions optimal mandatory"
+  },
+  {
+    "id": "P05",
+    "question": "WMRN 的食管勾画在纵隔窗覆盖到什么组织层次？纵向起止是哪里？",
+    "search_terms": "WMRN oesophagus contour mediastinal window tissue layers longitudinal borders"
+  },
+  {
+    "id": "P06",
+    "question": "Wake Forest 62718 的每次 <3 Gy 表中，肺 V20 与平均剂量分别扣除什么？限制值也请分别列出。",
+    "search_terms": "Wake Forest 62718 less than 3 Gy per fraction lung V20 and mean dose limits and volume definition"
+  },
+  {
+    "id": "P07",
+    "question": "Wake Forest 每次 <3 Gy 的常规表里，心脏的 V60 和 V45 各限制为多少？",
+    "search_terms": "Wake Forest conventional less than 3 Gy per fraction heart V60 and V45"
+  },
+  {
+    "id": "P08",
+    "question": "Wake Forest 的每次 <3 Gy 表分别怎么写臂丛和脊髓最大剂量？",
+    "search_terms": "Wake Forest conventional less than 3 Gy per fraction brachial plexus spinal cord maximum dose"
+  },
+  {
+    "id": "P09",
+    "question": "按 Wake Forest 62718 第 7.6 节，建议的正常组织约束是不是入组必需？",
+    "search_terms": "Wake Forest 62718 section 7.6 dosimetric guidelines normal tissue constraints mandatory eligibility"
+  },
+  {
+    "id": "P10",
+    "question": "WMRN 食管 Dmax (0.1 cc) 的 8 次分割强制列和最优列分别写了什么？",
+    "search_terms": "WMRN oesophagus Dmax 0.1cc eight fractions mandatory and optimal"
+  },
+  {
+    "id": "A01",
+    "question": "West Midlands 胸壁 Dmax (0.1 cc) 在 8 次分割的强制栏写了限值吗？",
+    "search_terms": "West Midlands chest wall Dmax 0.1cc eight fractions mandatory constraint"
+  },
+  {
+    "id": "A02",
+    "question": "WMRN 的 5 次臂丛 Dmax (0.1 cc) 最优格是否明确写了 Gy 这个单位？",
+    "search_terms": "WMRN five fractions brachial plexus Dmax 0.1cc optimal cell Gy unit"
+  },
+  {
+    "id": "A03",
+    "question": "West Midlands 8 次分割皮肤 D10cc 的最优格写了小于号吗？",
+    "search_terms": "West Midlands eight fractions skin D10cc optimal cell less than sign"
+  },
+  {
+    "id": "A04",
+    "question": "Wake Forest 62718 的每次 <3 Gy 常规约束表有没有肾脏的平均剂量行？只问这一张表。",
+    "search_terms": "Wake Forest 62718 less than 3 Gy per fraction conventional table kidney mean dose"
+  },
+  {
+    "id": "A05",
+    "question": "Wake Forest 第 22 页每次 <3 Gy 的常规约束表是否单列了 5 次分割的食管 Mean？只问该表。",
+    "search_terms": "Wake Forest page 22 conventional less than 3 Gy per fraction oesophagus mean five fractions"
+  }
+]

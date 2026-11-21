@@ -1,0 +1,32 @@
+[
+  {
+    "id": "Q1",
+    "question": "按 eviQ 的中央型肺立体定向放疗协议，超中央型肿瘤是否在协议范围内？协议如何定义超中央型？",
+    "search_terms": "central tumours stereotactic SBRT indications ultra-central planning target volume overlapping oesophagus bronchial tree artery vein"
+  },
+  {
+    "id": "Q2",
+    "question": "eviQ 对外周型肺癌 SABR 的协议如何界定“外周型”？请说明距离和测量的解剖参照点。",
+    "search_terms": "peripheral tumours stereotactic SBRT indications peripherally located distance bifurcation lobar bronchi"
+  },
+  {
+    "id": "Q3",
+    "question": "eviQ 根治性外照射常规协议的 CT 模拟定位，推荐哪种 CT？如果不用推荐的方式，协议还列出了什么？",
+    "search_terms": "definitive EBRT with or without chemotherapy conventional simulation CT acquisition 4D CT 3D CT"
+  },
+  {
+    "id": "Q4",
+    "question": "eviQ 的肺癌大分割根治性外照射协议列出了哪些 II–III 期患者的适用条件？请重点说明能否接受手术及同步化疗。",
+    "search_terms": "definitive EBRT hypofractionation stage II III indications surgery concurrent chemotherapy"
+  },
+  {
+    "id": "Q5",
+    "question": "只知道患者为早期 NSCLC，正在讨论 SBRT，但题目没有给肿瘤与中央气道的关系，也没有提供分割方案。能否直接选一个食管剂量约束？还缺哪些条件？",
+    "search_terms": "stereotactic central peripheral organs at risk oesophagus dose constraints fractions applicability"
+  },
+  {
+    "id": "Q6",
+    "question": "eviQ 的中央型肺立体定向放疗协议采用哪一版 AJCC 分期？如果病例按第9版记录，可以声称协议本身采用第9版吗？",
+    "search_terms": "central tumours stereotactic radiation AJCC staging manual edition ninth eighth protocol"
+  }
+]

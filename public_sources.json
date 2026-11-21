@@ -1,0 +1,92 @@
+[
+  {
+    "source": "1871",
+    "url": "https://www.eviq.org.au/radiation-oncology/respiratory/1871-respiratory-non-small-cell-lung-cancer-defini",
+    "title": "Respiratory non-small cell lung cancer definitive EBRT with or without chemotherapy",
+    "version": "1871 v.7",
+    "sha256": "e77f5faf9465b97d89b35d2c1f145f35732bd879ce42ba2ee7ebfd7ad4696608",
+    "terms": "https://www.eviq.org.au/copyright",
+    "path": "data/raw/1871.html"
+  },
+  {
+    "source": "3389",
+    "url": "https://www.eviq.org.au/radiation-oncology/respiratory/3389-respiratory-non-small-cell-lung-cancer-defini",
+    "title": "Respiratory non-small cell lung cancer definitive stereotactic EBRT peripheral tumours",
+    "version": "3389 v.3",
+    "sha256": "e31724eef2f5a4b75f973898db10807bc8ef8896c8327faac5622ca38f76e417",
+    "terms": "https://www.eviq.org.au/copyright",
+    "path": "data/raw/3389.html"
+  },
+  {
+    "source": "3697",
+    "url": "https://www.eviq.org.au/radiation-oncology/respiratory/3697-respiratory-non-small-cell-lung-cancer-defini",
+    "title": "Respiratory non-small cell lung cancer definitive EBRT hypofractionation",
+    "version": "3697 v.3",
+    "sha256": "458fe8caa3b9353e4ef0d800099b20de4d204f41293fecf9c07c64961c83f9c0",
+    "terms": "https://www.eviq.org.au/copyright",
+    "path": "data/raw/3697.html"
+  },
+  {
+    "source": "4018",
+    "url": "https://www.eviq.org.au/radiation-oncology/respiratory/4018-respiratory-non-small-cell-lung-cancer-defini",
+    "title": "Respiratory non-small cell lung cancer definitive stereotactic EBRT central tumours",
+    "version": "4018 v.3",
+    "sha256": "d28acb1197699d4e723b6c6001c3b1ca2edd9a43643f277535143245f20de8c2",
+    "terms": "https://www.eviq.org.au/copyright",
+    "path": "data/raw/4018.html"
+  },
+  {
+    "source": "pdq",
+    "url": "https://www.cancer.gov/types/lung/hp/non-small-cell-lung-treatment-pdq",
+    "title": "Non-Small Cell Lung Cancer Treatment (PDQ®)–Health Professional Version",
+    "version": "Latest Updates to This Summary (10/27/2026)",
+    "sha256": "8cdca8edd060dec0f0d1f97e43d6df6ea630d5bc5e0cf0bf415b7bb14bf6759a",
+    "terms": "https://www.cancer.gov/policies/copyright-reuse",
+    "path": "data/raw/pdq.html"
+  },
+  {
+    "source": "1872",
+    "title": "Respiratory lung primary palliative EBRT",
+    "version": "1872 v.7",
+    "url": "https://www.eviq.org.au/radiation-oncology/respiratory/1872-respiratory-lung-primary-palliative-ebrt",
+    "sha256": "de4e16d34bf681d2e331af93625a74672d2e45f06b60deca4ce5c034826cd6b8",
+    "terms": "https://www.eviq.org.au/copyright",
+    "path": "data/raw/1872.html"
+  },
+  {
+    "source": "1873",
+    "title": "Respiratory non-small cell lung cancer adjuvant EBRT post-operative",
+    "version": "1873 v.6",
+    "url": "https://www.eviq.org.au/radiation-oncology/respiratory/1873-respiratory-non-small-cell-lung-cancer-adjuva",
+    "sha256": "cc77c208be17aea74c2796dfc6fc0b33b183f95b9f89efb396db2233857897d9",
+    "terms": "https://www.eviq.org.au/copyright",
+    "path": "data/raw/1873.html"
+  },
+  {
+    "source": "3679",
+    "title": "Respiratory small cell lung cancer consolidative EBRT",
+    "version": "3679 v.2",
+    "url": "https://www.eviq.org.au/radiation-oncology/respiratory/3679-respiratory-small-cell-lung-cancer-consolidat",
+    "sha256": "38dcedd9376d9f16a41b7ece138cf48ff53872e05e9a622c42397846819f40bd",
+    "terms": "https://www.eviq.org.au/copyright",
+    "path": "data/raw/3679.html"
+  },
+  {
+    "protocol": "wmrn",
+    "publisher": "West Midlands Radiotherapy Network",
+    "title": "Lung SABR Protocol",
+    "version": "v4.0",
+    "url": "https://westmidlandsradiotherapynetwork.nhs.uk/wp-content/uploads/2025/07/West-Midlands-RT-Network-SABR-lung-V4.0-RATIFIED-BY-EAG-100725.pdf",
+    "sha256": "9867f6aff8875ce0c6386a47715e5796f28f62413023aef709e86b8a458e6ce1",
+    "path": "data/raw/wmrn.pdf"
+  },
+  {
+    "protocol": "wfb",
+    "publisher": "Wake Forest Baptist Comprehensive Cancer Center",
+    "title": "WFBCCC 62718 / NCT03867175",
+    "version": "2022-04-01",
+    "url": "https://cdn.clinicaltrials.gov/large-docs/75/NCT03867175/Prot_SAP_000.pdf",
+    "sha256": "8528a70f0f05a5e98e580133b931a75affef33d6c383ca293c043c4ba426b377",
+    "path": "data/raw/wfb.pdf"
+  }
+]

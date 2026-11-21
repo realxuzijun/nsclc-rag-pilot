@@ -1,0 +1,125 @@
+[
+  {
+    "id": "P01",
+    "evidence": [
+      "wmrn-p9-contour-chest-wall"
+    ],
+    "required": "胸腔外侧半胸2cm环；排除椎体、胸骨和皮肤",
+    "absent": false
+  },
+  {
+    "id": "P02",
+    "evidence": [
+      "wmrn-p10-contour-spinal-cord"
+    ],
+    "required": "C2齿突尖；最尾侧椎管仍可见的层面，通常L5–S1",
+    "absent": false
+  },
+  {
+    "id": "P03",
+    "evidence": [
+      "wmrn-p13-oar-03"
+    ],
+    "required": "5次最优<29Gy，强制<38Gy",
+    "absent": false
+  },
+  {
+    "id": "P04",
+    "evidence": [
+      "wmrn-p14-oar-03"
+    ],
+    "required": "最优<10%，强制<15%，双肺减运动适配GTV",
+    "absent": false
+  },
+  {
+    "id": "P05",
+    "evidence": [
+      "wmrn-p10-contour-oesophagus"
+    ],
+    "required": "肌层至脂肪外膜；环状软骨下缘至胃食管交界",
+    "absent": false
+  },
+  {
+    "id": "P06",
+    "evidence": [
+      "wfb-p22-oar-01",
+      "wfb-p22-oar-02"
+    ],
+    "required": "V20双肺减PTV <37%；均值双肺减GTV <20Gy",
+    "absent": false
+  },
+  {
+    "id": "P07",
+    "evidence": [
+      "wfb-p22-oar-04",
+      "wfb-p22-oar-05"
+    ],
+    "required": "V60<33%，V45<66%，只用常规每次<3Gy表",
+    "absent": false
+  },
+  {
+    "id": "P08",
+    "evidence": [
+      "wfb-p22-oar-07",
+      "wfb-p22-oar-08"
+    ],
+    "required": "臂丛<66Gy，脊髓<48Gy",
+    "absent": false
+  },
+  {
+    "id": "P09",
+    "evidence": [
+      "wfb-p21-oar-policy"
+    ],
+    "required": "强烈推荐，但非入组必须条件",
+    "absent": false
+  },
+  {
+    "id": "P10",
+    "evidence": [
+      "wmrn-p14-oar-08"
+    ],
+    "required": "强制<40Gy，最优为横线",
+    "absent": false
+  },
+  {
+    "id": "A01",
+    "evidence": [
+      "wmrn-p14-oar-05"
+    ],
+    "required": "8次强制栏为横线，没有限值，不套别的协议",
+    "absent": true
+  },
+  {
+    "id": "A02",
+    "evidence": [
+      "wmrn-p13-oar-01"
+    ],
+    "required": "原格<30.5，未明写单位，不能补成原格写了Gy",
+    "absent": true
+  },
+  {
+    "id": "A03",
+    "evidence": [
+      "wmrn-p14-oar-13"
+    ],
+    "required": "原格44Gy，未明写比较符",
+    "absent": true
+  },
+  {
+    "id": "A04",
+    "evidence": [
+      "wfb-p22-oar-inventory"
+    ],
+    "required": "该表未列肾脏均值，不能从同页其他方案借",
+    "absent": true
+  },
+  {
+    "id": "A05",
+    "evidence": [
+      "wfb-p22-oar-inventory"
+    ],
+    "required": "没有按总分次数分列；不把同页5次SBRT表拿来作答",
+    "absent": true
+  }
+]
