@@ -1,8 +1,32 @@
-# Lung radiotherapy protocol RAG handoff
+# Lung Radiotherapy Protocol RAG
 
 [简体中文](README.md)
 
 This research prototype answers questions about public lung radiotherapy protocols. It queries structured dose, image verification, and contouring tables in SQLite. It retrieves, reranks, and verifies individual clauses for narrative questions. Both paths show the original evidence and its location. For a new collection, start with text retrieval and add structured tables once the document layout and terminology are clear.
+
+## Hardware and GPU memory
+
+### Measured GPU memory
+
+The test used one NVIDIA RTX A6000 (48 GB), Ollama 0.20.5, and Qwen3-8B Q4_K_M with an 8,192-token generation context. The independent reranker ran on CPU with eight threads. One question ran on each path while `nvidia-smi` sampled total device memory every 100 ms.
+
+| Path | Peak device memory |
+| --- | ---: |
+| SQLite lookup and Chinese formatting, Qwen cold start | 6,316 MiB (6.17 GiB) |
+| Text retrieval and Chinese explanation, Qwen already loaded | 8,003 MiB (7.82 GiB) |
+
+These measurements cover the single-request configuration above. Concurrent requests, longer contexts, and other quantization levels need separate measurement.
+
+### Recommended configurations
+
+These are sizing estimates for the project corpus and the measured peaks above.
+
+| Workload | GPU memory | CPU | System RAM | Free SSD space |
+| --- | ---: | ---: | ---: | ---: |
+| Single-user development and reproduction | 12 GiB | 8 logical threads | 16 GiB | 25 GB |
+| Larger collections or additional services on the same host | 16 GiB or more | 8–16 logical threads | 32 GiB or more | 40 GB or more |
+
+An 8 GiB GPU leaves about 189 MiB above the measured text retrieval peak. Display use and other GPU processes can consume that margin. Check Ollama support for your GPU and driver before installation. Before increasing concurrency or context length, profile device memory under your workload and check CPU/GPU placement with `ollama ps`. [Ollama hardware support](https://docs.ollama.com/gpu) · [Context length](https://docs.ollama.com/context-length)
 
 ## 1. Set up the runtime and models
 
@@ -56,7 +80,7 @@ curl -fsS http://127.0.0.1:11543/api/tags
 | Embeddings for questions and clauses | [BGE-M3](https://ollama.com/library/bge-m3), `bge-m3`, F16, digest prefix `790764642607` |
 | Independent reranking | BGE reranker v2 m3 Q8_0 served by llama.cpp on CPU in the reference setup |
 
-If the handoff includes a working `reranker_runtime/`, check that `runtime.path` points to the local `llama-server` binary and start the service. For a fresh setup, build [llama.cpp b12608](https://github.com/ggml-org/llama.cpp/releases/tag/b12608) and download the weights from the [pinned revision](https://huggingface.co/gpustack/bge-reranker-v2-m3-GGUF/tree/3093af03b1a635e67b084b1d8c03c5f5e020fd05). If system CMake is unavailable, unpack the [Kitware CMake 3.31.8](https://github.com/Kitware/CMake/releases/tag/v3.31.8) archive for your architecture and add its `bin` directory to the terminal's `PATH`.
+If you already have a working `reranker_runtime/`, check that `runtime.path` points to the local `llama-server` binary and start the service. For a fresh setup, build [llama.cpp b12608](https://github.com/ggml-org/llama.cpp/releases/tag/b12608) and download the weights from the [pinned revision](https://huggingface.co/gpustack/bge-reranker-v2-m3-GGUF/tree/3093af03b1a635e67b084b1d8c03c5f5e020fd05). If system CMake is unavailable, unpack the [Kitware CMake 3.31.8](https://github.com/Kitware/CMake/releases/tag/v3.31.8) archive for your architecture and add its `bin` directory to the terminal's `PATH`.
 
 ~~~bash
 mkdir -p reranker_runtime
@@ -79,7 +103,7 @@ To try a different generation or embedding model, update `MODEL` or `EMBED` in `
 
 ## 2. Download the public test sources and build the data
 
-[public_sources.json](public_sources.json) lists the official links, reference versions, and original snapshot hashes for the eviQ, NCI PDQ, West Midlands, and Wake Forest sources. The download helper puts those sources under `data/raw/`. You can also save the documents yourself using the paths in the manifest or copy in the original handoff snapshots. Follow the [eviQ reuse terms](https://www.eviq.org.au/copyright) and the [NCI reuse policy](https://www.cancer.gov/policies/copyright-reuse).
+[public_sources.json](public_sources.json) lists the official links, reference versions, and original snapshot hashes for the eviQ, NCI PDQ, West Midlands, and Wake Forest sources. The download helper puts those sources under `data/raw/`. You can also save the documents yourself using the paths in the manifest or copy in the reference snapshots. Follow the [eviQ reuse terms](https://www.eviq.org.au/copyright) and the [NCI reuse policy](https://www.cancer.gov/policies/copyright-reuse).
 
 ~~~bash
 python fetch_public_data.py
@@ -90,7 +114,7 @@ python extract_publisher_tables.py
 python build_protocol_tables.py
 ~~~
 
-The download helper reports differences from the reference hashes and keeps existing local files for review. If the official West Midlands PDF returns HTTP 403, download it from a network that can reach the publisher or use the matching handoff snapshot. Save it as `data/raw/wmrn.pdf` and rerun the download command. A publisher may have changed the live document or layout. For an exact reproduction, use the reference snapshots and compare their hashes to the manifest. The PDF import covers selected pages and tables, including the West Midlands dose and contour tables and the Wake Forest conventional fractionation table. The two generated SQLite databases and all review outputs stay under ignored local directories.
+The download helper reports differences from the reference hashes and keeps existing local files for review. If the official West Midlands PDF returns HTTP 403, download it from a network that can reach the publisher or use the matching reference snapshot. Save it as `data/raw/wmrn.pdf` and rerun the download command. A publisher may have changed the live document or layout. For an exact reproduction, use the reference snapshots and compare their hashes to the manifest. The PDF import covers selected pages and tables, including the West Midlands dose and contour tables and the Wake Forest conventional fractionation table. The two generated SQLite databases and all review outputs stay under ignored local directories.
 
 ## 3. Smoke-test both paths and reproduce the evaluation
 
@@ -119,7 +143,7 @@ This synthetic example exercises the existing text route. Run it once in a proje
 
 ~~~bash
 cat >> data/external_clauses.jsonl <<'JSONL'
-{"id":"9901-v1-p2-L001","source":"9901","title":"Synthetic handoff example","version":"v1","section":"Quality assurance","url":"https://example.org/protocol-9901.pdf#page=2","text":"The designated medical physicist must review the quality assurance record before the first session."}
+{"id":"9901-v1-p2-L001","source":"9901","title":"Synthetic protocol example","version":"v1","section":"Quality assurance","url":"https://example.org/protocol-9901.pdf#page=2","text":"The designated medical physicist must review the quality assurance record before the first session."}
 JSONL
 python protocol_answer.py --question '协议编号 9901 的质控记录由谁复核？' --terms 'quality assurance record review'
 ~~~
@@ -144,4 +168,4 @@ Expect a citation to `9901-v1-p2-L001` and a Chinese answer identifying the desi
 | Custom clauses disappear after a rebuild | Run the custom merge after the extraction step. Persist custom PDF records in the extractor used to regenerate them |
 | Latency or GPU memory is high | Check `/api/ps` and `nvidia-smi`. Separate cold loading, on-demand embeddings, CPU reranking, and generation |
 
-For handoff, first reproduce the two smoke tests, then load one document into a copy of the project. This prototype was evaluated for literature question answering and evidence citation. Clinical use requires separate validation.
+This prototype was evaluated for literature question answering and evidence citation. Clinical use requires separate validation.
