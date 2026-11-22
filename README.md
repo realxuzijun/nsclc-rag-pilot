@@ -1,8 +1,32 @@
-# 肺癌放疗协议 RAG｜项目交接
+# 肺癌放疗协议 RAG
 
 [English](README.en.md)
 
 这是公开肺癌放疗协议问答的研究原型。已结构化的剂量、影像验证和勾画表走 SQLite，正文走条款检索、重排序及引用校验。两条路径都附原文和出处。新项目可以先接入正文，等数据和术语稳定后再结构化表格。
+
+## 硬件配置与显存
+
+### 实测显存
+
+在单张 NVIDIA RTX A6000（48 GB）上，使用 Ollama 0.20.5 和 Qwen3-8B Q4_K_M，生成请求的上下文设为 8,192 tokens。独立重排序服务在 CPU 上运行，配置为 8 线程。两条路径各运行一道题，用 `nvidia-smi` 每 100 毫秒采样整卡占用。
+
+| 路径 | 整卡显存峰值 |
+| --- | ---: |
+| SQLite 查表 + 中文排版，Qwen 冷启动 | 6,316 MiB（6.17 GiB） |
+| 正文检索 + 中文解释，Qwen 已加载 | 8,003 MiB（7.82 GiB） |
+
+这组数据适用于上述单请求配置。并发请求、长上下文和其他量化规格需要单独测量。
+
+### 配置建议
+
+下表是按本项目的小型语料库和上述峰值给出的容量建议。
+
+| 场景 | GPU 显存 | CPU | 系统内存 | SSD 可用空间 |
+| --- | ---: | ---: | ---: | ---: |
+| 单人开发和复现实验 | 12 GiB | 8 个逻辑线程 | 16 GiB | 25 GB |
+| 更大的语料库或多服务同机 | 16 GiB 或以上 | 8–16 个逻辑线程 | 32 GiB 或以上 | 40 GB 或以上 |
+
+8 GiB 显卡在实测检索峰值下只剩约 189 MiB 余量，显卡同时承担桌面显示或其他进程时尤其容易吃紧。安装前可核对 GPU 和驱动是否受 Ollama 支持。开启并发或提高上下文前，按实际负载重新采样显存，并用 `ollama ps` 检查模型在 CPU 和 GPU 上的分配。[Ollama 硬件支持](https://docs.ollama.com/gpu) · [上下文长度说明](https://docs.ollama.com/context-length)
 
 ## 1. 环境和模型
 
@@ -56,7 +80,7 @@ curl -fsS http://127.0.0.1:11543/api/tags
 | 中文问题与条款的向量检索 | [BGE-M3](https://ollama.com/library/bge-m3)，`bge-m3`，F16，摘要前缀 `790764642607` |
 | 独立重排序 | BGE reranker v2 m3 Q8_0，由 llama.cpp 提供，基准服务使用 CPU |
 
-若交付目录已有可用的 `reranker_runtime/`，核对 `runtime.path` 指向本机的 `llama-server`，直接执行下方启动命令。全新环境可按以下命令构建。没有系统级 CMake 时，可解压 [Kitware CMake 3.31.8](https://github.com/Kitware/CMake/releases/tag/v3.31.8) 对应架构的压缩包，将其 `bin` 加入当前终端的 `PATH`。权重为 [固定提交](https://huggingface.co/gpustack/bge-reranker-v2-m3-GGUF/tree/3093af03b1a635e67b084b1d8c03c5f5e020fd05)，二进制基于 [llama.cpp b12608](https://github.com/ggml-org/llama.cpp/releases/tag/b12608)。
+如果已有可用的 `reranker_runtime/`，核对 `runtime.path` 指向本机的 `llama-server`，直接执行下方启动命令。全新环境可按以下命令构建。没有系统级 CMake 时，可解压 [Kitware CMake 3.31.8](https://github.com/Kitware/CMake/releases/tag/v3.31.8) 对应架构的压缩包，将其 `bin` 加入当前终端的 `PATH`。权重为 [固定提交](https://huggingface.co/gpustack/bge-reranker-v2-m3-GGUF/tree/3093af03b1a635e67b084b1d8c03c5f5e020fd05)，二进制基于 [llama.cpp b12608](https://github.com/ggml-org/llama.cpp/releases/tag/b12608)。
 
 ~~~bash
 mkdir -p reranker_runtime
@@ -79,7 +103,7 @@ bash start_reranker.sh
 
 ## 2. 下载公开测试资料并构建数据
 
-[来源清单](public_sources.json)列出 eviQ、NCI PDQ、West Midlands 和 Wake Forest 的官方链接、参考版本及原始快照摘要。下载脚本会把资料保存到 `data/raw/`。也可以按清单的文件名手工保存原件，或使用交接时的原始快照。参见 [eviQ 使用条款](https://www.eviq.org.au/copyright)和 [NCI 使用条款](https://www.cancer.gov/policies/copyright-reuse)。
+[来源清单](public_sources.json)列出 eviQ、NCI PDQ、West Midlands 和 Wake Forest 的官方链接、参考版本及原始快照摘要。下载脚本会把资料保存到 `data/raw/`。也可以按清单的文件名手工保存原件，或使用原始快照。参见 [eviQ 使用条款](https://www.eviq.org.au/copyright)和 [NCI 使用条款](https://www.cancer.gov/policies/copyright-reuse)。
 
 ~~~bash
 python fetch_public_data.py
@@ -90,7 +114,7 @@ python extract_publisher_tables.py
 python build_protocol_tables.py
 ~~~
 
-下载程序会报告与参考摘要的差异，并保留已有本地文件供核对。若 West Midlands 的官方 PDF 返回 403，请从能访问官网的网络下载，或取用交接时的同版原件，保存为 `data/raw/wmrn.pdf` 后重新运行下载命令。发布方可能更新了在线版本或表格布局。若需要精确复现实验，请使用交接时的参考快照，并对照来源清单核验摘要。PDF 只导入选定的页和表，包括 West Midlands 的剂量和勾画表，以及 Wake Forest 的常规分割约束表。生成的 SQLite 和测试输出均保存在忽略提交的本地目录。
+下载程序会报告与参考摘要的差异，并保留已有本地文件供核对。若 West Midlands 的官方 PDF 返回 403，请从能访问官网的网络下载，或取用同版原件，保存为 `data/raw/wmrn.pdf` 后重新运行下载命令。发布方可能更新了在线版本或表格布局。若需要精确复现实验，请使用参考快照，并对照来源清单核验摘要。PDF 只导入选定的页和表，包括 West Midlands 的剂量和勾画表，以及 Wake Forest 的常规分割约束表。生成的 SQLite 和测试输出均保存在忽略提交的本地目录。
 
 ## 3. 冒烟测试与复现实验
 
@@ -119,7 +143,7 @@ python round9.py
 
 ~~~bash
 cat >> data/external_clauses.jsonl <<'JSONL'
-{"id":"9901-v1-p2-L001","source":"9901","title":"Synthetic handoff example","version":"v1","section":"Quality assurance","url":"https://example.org/protocol-9901.pdf#page=2","text":"The designated medical physicist must review the quality assurance record before the first session."}
+{"id":"9901-v1-p2-L001","source":"9901","title":"Synthetic protocol example","version":"v1","section":"Quality assurance","url":"https://example.org/protocol-9901.pdf#page=2","text":"The designated medical physicist must review the quality assurance record before the first session."}
 JSONL
 python protocol_answer.py --question '协议编号 9901 的质控记录由谁复核？' --terms 'quality assurance record review'
 ~~~
@@ -144,4 +168,4 @@ python protocol_answer.py --question '协议编号 9901 的质控记录由谁复
 | 新数据重建后消失 | 检查自有条款是否在提取脚本重写输出后重新合并，自定义 PDF 记录是否已写入可重建的适配器 |
 | 推理慢或显存高 | 查 `/api/ps` 与 `nvidia-smi`。区分冷启动、正文在线嵌入、CPU 重排序和生成耗时 |
 
-下一位维护者可先跑通两条冒烟题，再在副本接入一份自有文档。这个原型的验证集中在文献问答及引用，临床使用还需要独立验证。
+这个原型的验证集中在文献问答及引用，临床使用还需要独立验证。
